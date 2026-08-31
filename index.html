@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
@@ -8,14 +7,7 @@
 <title>GEO-MAP Moldova</title>
 
 <style>
-.real-map {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    display: block;
-    margin: 20px auto;
-    border-radius: 12px;
-}
+
 :root {
     --green: #176B5B;
     --blue: #247BA0;
@@ -24,10 +16,17 @@
     --dark: #263238;
     --light: #FFFFFF;
     --border: #DCE5E1;
+    --success: #2E7D32;
+    --warning: #B7791F;
+    --error: #C62828;
 }
 
 * {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -37,7 +36,10 @@ body {
     color: var(--dark);
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
 
 header {
     background: white;
@@ -46,6 +48,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .logo {
@@ -55,6 +61,7 @@ header {
     font-size: 21px;
     font-weight: bold;
     color: var(--green);
+    white-space: nowrap;
 }
 
 .logo-icon {
@@ -80,17 +87,26 @@ nav a:hover {
 .language {
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 8px 12px;
+    padding: 8px 14px;
     background: white;
     cursor: pointer;
+    font-weight: bold;
+    color: var(--green);
 }
 
-/* HERO */
+.language:hover {
+    background: #EAF4F1;
+}
+
+
+/* =========================
+   HERO
+========================= */
 
 .hero {
     max-width: 1200px;
     margin: auto;
-    padding: 55px 30px 30px;
+    padding: 45px 30px 30px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
@@ -106,7 +122,7 @@ nav a:hover {
 .hero h2 {
     font-size: 24px;
     font-weight: normal;
-    margin-bottom: 15px;
+    margin: 0 0 15px;
 }
 
 .hero p {
@@ -131,7 +147,10 @@ nav a:hover {
     opacity: 0.9;
 }
 
-/* MAP */
+
+/* =========================
+   HERO MAP
+========================= */
 
 .map-card {
     background: white;
@@ -144,21 +163,26 @@ nav a:hover {
 
 .map-card h3 {
     color: var(--green);
+    margin-top: 0;
 }
 
-.map {
+.real-map {
     width: 100%;
-    max-width: 360px;
-    margin: auto;
+    max-width: 350px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 12px;
 }
 
-.moldova {
-    fill: #EAF4F1;
-    stroke: var(--green);
-    stroke-width: 5;
+.map-card p {
+    color: #63716F;
 }
 
-/* FEATURES */
+
+/* =========================
+   FEATURES
+========================= */
 
 .features {
     max-width: 1200px;
@@ -200,7 +224,10 @@ nav a:hover {
     line-height: 1.5;
 }
 
-/* MAP ACTIVITY */
+
+/* =========================
+   ACTIVITY
+========================= */
 
 .activity {
     max-width: 1200px;
@@ -221,17 +248,83 @@ nav a:hover {
 
 .instruction {
     background: #EAF4F1;
-    padding: 18px;
+    padding: 20px;
     border-radius: 12px;
     margin: 20px 0;
+    line-height: 1.6;
 }
 
-#result {
-    margin-top: 15px;
+.instruction strong {
+    font-size: 18px;
+}
+
+
+/* =========================
+   INTERACTIVE MAP
+========================= */
+
+.interactive-map-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    margin: 25px auto;
+    cursor: crosshair;
+}
+
+.activity-map {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.click-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+.student-marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #C75C5C;
+    border: 3px solid white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    pointer-events: none;
+}
+
+.map-result {
+    margin: 20px auto;
+    padding: 15px;
+    max-width: 650px;
+    border-radius: 10px;
+    background: #F7F8F5;
+    text-align: center;
     font-weight: bold;
+    line-height: 1.5;
 }
 
-/* REFLECTION */
+.map-buttons {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.map-buttons button {
+    margin: 5px;
+}
+
+
+/* =========================
+   REFLECTION
+========================= */
 
 .reflection {
     max-width: 1200px;
@@ -246,6 +339,14 @@ nav a:hover {
     padding: 25px;
 }
 
+.reflection-box h2 {
+    color: var(--green);
+}
+
+.reflection-box label {
+    line-height: 2;
+}
+
 textarea {
     width: 100%;
     min-height: 100px;
@@ -253,9 +354,14 @@ textarea {
     border-radius: 10px;
     padding: 12px;
     resize: vertical;
+    font-family: Arial, sans-serif;
+    margin-top: 10px;
 }
 
-/* FOOTER */
+
+/* =========================
+   FOOTER
+========================= */
 
 footer {
     margin-top: 40px;
@@ -266,12 +372,20 @@ footer {
     font-size: 13px;
 }
 
-/* RESPONSIVE */
+
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(max-width: 850px) {
 
+    header {
+        padding: 12px 18px;
+    }
+
     .hero {
         grid-template-columns: 1fr;
+        padding: 30px 20px;
     }
 
     .cards {
@@ -281,7 +395,18 @@ footer {
     nav {
         display: none;
     }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .activity,
+    .features,
+    .reflection {
+        padding: 20px;
+    }
 }
+
 
 @media(max-width: 500px) {
 
@@ -290,420 +415,582 @@ footer {
     }
 
     .hero h1 {
-        font-size: 35px;
+        font-size: 32px;
     }
 
+    .hero h2 {
+        font-size: 20px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .activity-box {
+        padding: 18px;
+    }
+
+    .instruction strong {
+        font-size: 16px;
+    }
+
+    .main-button {
+        width: 100%;
+    }
+
+    .map-buttons .language {
+        width: 100%;
+        margin-left: 0 !important;
+    }
+
+    .language {
+        padding: 7px 10px;
+    }
 }
 
 </style>
-
 </head>
+
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
 
-```
-<div class="logo">
-    <span class="logo-icon">🗺️</span>
-    GEO-MAP Moldova
-</div>
+    <div class="logo">
+        <span class="logo-icon">🗺️</span>
+        <span id="logoText">GEO-MAP Moldova</span>
+    </div>
 
-<nav>
-    <a href="#harti">Hărți</a>
-    <a href="#misiuni">Misiuni</a>
-    <a href="#exploreaza">Explorează</a>
-    <a href="#progres">Progresul meu</a>
-</nav>
+    <nav>
+        <a href="#harti" id="navMaps">Hărți</a>
+        <a href="#misiuni" id="navMissions">Misiuni</a>
+        <a href="#exploreaza" id="navExplore">Explorează</a>
+        <a href="#progres" id="navProgress">Progresul meu</a>
+    </nav>
 
-<button class="language" onclick="changeLanguage()">
-    RO | EN
-</button>
-```
+    <button class="language" onclick="changeLanguage()" id="languageButton">
+        RO | EN
+    </button>
 
 </header>
 
+
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="hero">
 
-```
-<div>
+    <div>
 
-    <h1>GEO-MAP Moldova</h1>
+        <h1>GEO-MAP Moldova</h1>
 
-    <h2 id="subtitle">
-        Harta care te învață să gândești geografic.
-    </h2>
+        <h2 id="subtitle">
+            Harta care te învață să gândești geografic.
+        </h2>
 
-    <p id="description">
-        Explorează, construiește, verifică și interpretează
-        hărțile Republicii Moldova.
-    </p>
+        <p id="description">
+            Explorează, construiește, verifică și interpretează
+            hărțile Republicii Moldova.
+        </p>
 
-    <button class="main-button" onclick="scrollToActivity()">
-        ÎNCEPE EXPLORAREA
-    </button>
+        <button
+            class="main-button"
+            onclick="scrollToActivity()"
+            id="startButton"
+        >
+            ÎNCEPE EXPLORAREA
+        </button>
 
-</div>
+    </div>
 
 
-<div class="map-card">
+    <div class="map-card">
 
-   <h3>🇲🇩 Republica Moldova</h3>
+        <h3 id="mapTitle">
+            🇲🇩 Republica Moldova
+        </h3>
 
-<img
-    src="moldova-physical.jpg.jpg"
-    alt="Harta Republicii Moldova"
-    class="real-map"
->
-    <p>
-        Descoperă spațiul geografic al Republicii Moldova.
-    </p>
+        <img
+            src="moldova-physical.jpg.jpg"
+            alt="Harta fizică a Republicii Moldova"
+            class="real-map"
+        >
 
-</div>
-```
+        <p id="mapDescription">
+            Descoperă spațiul geografic al Republicii Moldova.
+        </p>
+
+    </div>
 
 </section>
+
+
+<!-- =========================
+     FEATURES
+========================= -->
 
 <section class="features" id="harti">
 
-```
-<h2>Descoperă GEO-MAP</h2>
+    <h2 id="discoverTitle">
+        Descoperă GEO-MAP
+    </h2>
 
-<div class="cards">
+    <div class="cards">
 
-    <div class="card">
+        <div class="card">
 
-        <div class="card-icon">🗺️</div>
+            <div class="card-icon">🗺️</div>
 
-        <h3>Hărți interactive</h3>
+            <h3 id="card1Title">
+                Hărți interactive
+            </h3>
 
-        <p>
-            Completează și explorează hărți geografice.
-        </p>
+            <p id="card1Text">
+                Completează și explorează hărți geografice.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">🎯</div>
+
+            <h3 id="card2Title">
+                Misiuni geografice
+            </h3>
+
+            <p id="card2Text">
+                Rezolvă provocări și descoperă Moldova.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">🧠</div>
+
+            <h3 id="card3Title">
+                Învață să înveți
+            </h3>
+
+            <p id="card3Text">
+                Analizează, verifică și reflectează asupra
+                propriului proces de învățare.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">📊</div>
+
+            <h3 id="card4Title">
+                Progresul tău
+            </h3>
+
+            <p id="card4Text">
+                Urmărește rezultatele și dezvoltarea competențelor.
+            </p>
+
+        </div>
 
     </div>
-
-
-    <div class="card">
-
-        <div class="card-icon">🎯</div>
-
-        <h3>Misiuni geografice</h3>
-
-        <p>
-            Rezolvă provocări și descoperă Moldova.
-        </p>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="card-icon">🧠</div>
-
-        <h3>Învață să înveți</h3>
-
-        <p>
-            Analizează, verifică și reflectează asupra
-            propriului proces de învățare.
-        </p>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="card-icon">📊</div>
-
-        <h3>Progresul tău</h3>
-
-        <p>
-            Urmărește rezultatele și dezvoltarea competențelor.
-        </p>
-
-    </div>
-
-</div>
-```
 
 </section>
+
+
+<!-- =========================
+     ACTIVITY
+========================= -->
 
 <section class="activity" id="misiuni">
 
-```
-<div class="activity-box">
+    <div class="activity-box">
 
-    <h2>🎯 Misiunea 1 — Localizează</h2>
+        <h2 id="missionTitle">
+            🎯 Misiunea 1 — Punctele extreme
+        </h2>
 
-    <div class="instruction">
 
-        <strong>
-            Localizează Codrii pe hartă.
-        </strong>
+        <div class="instruction">
 
-        <p>
-            Fă clic pe hartă în zona în care crezi că
-            se află Codrii.
-        </p>
+            <strong id="instructionTitle">
+                Localizează punctul extrem de nord al Republicii Moldova.
+            </strong>
+
+            <p id="instructionText">
+                Analizează harta fizică și fă clic în locul în care
+                crezi că se află punctul extrem de nord.
+            </p>
+
+        </div>
+
+
+        <!-- HARTA ACTIVITĂȚII -->
+
+        <div class="interactive-map-container">
+
+            <img
+                src="moldova-physical.jpg.jpg"
+                alt="Harta fizică a Republicii Moldova"
+                class="activity-map"
+                id="physicalMap"
+            >
+
+            <div
+                class="click-layer"
+                onclick="selectMapPoint(event)"
+            ></div>
+
+            <div
+                id="studentMarker"
+                class="student-marker"
+            ></div>
+
+        </div>
+
+
+        <div
+            id="result"
+            class="map-result"
+        >
+            📍 Fă clic pe hartă pentru a selecta răspunsul.
+        </div>
+
+
+        <div class="map-buttons">
+
+            <button
+                class="main-button"
+                onclick="checkNorthPoint()"
+                id="checkButton"
+            >
+                ✓ VERIFICĂ
+            </button>
+
+
+            <button
+                class="language"
+                onclick="showNorthHint()"
+                id="hintButton"
+            >
+                💡 AM NEVOIE DE UN INDICIU
+            </button>
+
+
+            <button
+                class="language"
+                onclick="resetNorthPoint()"
+                id="resetButton"
+            >
+                🔄 ÎNCEARCĂ DIN NOU
+            </button>
+
+        </div>
 
     </div>
 
-
-    <svg
-        id="interactiveMap"
-        viewBox="0 0 500 650"
-        style="width:100%;max-width:500px;display:block;margin:auto;cursor:crosshair;"
-        onclick="mapClick(event)"
-    >
-
-        <path
-            id="mapShape"
-            class="moldova"
-            d="M120 40
-               L180 25
-               L230 45
-               L285 35
-               L340 60
-               L380 90
-               L395 140
-               L380 185
-               L400 230
-               L385 275
-               L400 320
-               L375 365
-               L390 410
-               L365 455
-               L350 500
-               L315 530
-               L275 570
-               L230 550
-               L190 570
-               L155 540
-               L120 515
-               L100 470
-               L75 440
-               L90 395
-               L70 355
-               L85 315
-               L70 275
-               L90 235
-               L75 195
-               L95 155
-               L85 115
-               L105 80
-               Z"
-        />
-
-    </svg>
-
-
-    <div id="result"></div>
-
-    <button
-        class="main-button"
-        onclick="checkAnswer()"
-    >
-        ✓ VERIFICĂ
-    </button>
-
-
-    <button
-        class="language"
-        style="margin-left:10px;"
-        onclick="showHint()"
-    >
-        💡 AM NEVOIE DE UN INDICIU
-    </button>
-
-</div>
-```
-
 </section>
+
+
+<!-- =========================
+     REFLECTION
+========================= -->
 
 <section class="reflection" id="progres">
 
-```
-<div class="reflection-box">
+    <div class="reflection-box">
 
-    <h2>🧠 Reflectează</h2>
+        <h2 id="reflectionTitle">
+            🧠 Reflectează
+        </h2>
 
-    <p>
-        Ce te-a ajutat să localizezi răspunsul?
-    </p>
+        <p id="reflectionQuestion">
+            Ce te-a ajutat să localizezi răspunsul?
+        </p>
 
-    <label>
-        <input type="radio" name="reflection">
-        Am știut răspunsul.
-    </label>
 
-    <br><br>
+        <label>
+            <input type="radio" name="reflection">
+            <span id="reflection1">
+                Am știut răspunsul.
+            </span>
+        </label>
 
-    <label>
-        <input type="radio" name="reflection">
-        Am analizat harta.
-    </label>
+        <br><br>
 
-    <br><br>
 
-    <label>
-        <input type="radio" name="reflection">
-        Am folosit un indiciu.
-    </label>
+        <label>
+            <input type="radio" name="reflection">
+            <span id="reflection2">
+                Am analizat harta.
+            </span>
+        </label>
 
-    <br><br>
+        <br><br>
 
-    <label>
-        <input type="radio" name="reflection">
-        Am încercat din nou.
-    </label>
 
-    <br><br>
+        <label>
+            <input type="radio" name="reflection">
+            <span id="reflection3">
+                Am folosit un indiciu.
+            </span>
+        </label>
 
-    <textarea
-        placeholder="Scrie propria reflecție..."
-    ></textarea>
+        <br><br>
 
-</div>
-```
+
+        <label>
+            <input type="radio" name="reflection">
+            <span id="reflection4">
+                Am încercat din nou.
+            </span>
+        </label>
+
+        <br><br>
+
+
+        <textarea
+            id="reflectionText"
+            placeholder="Scrie propria reflecție..."
+        ></textarea>
+
+    </div>
 
 </section>
 
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
 
-```
-GEO-MAP Moldova ·
-„De la harta-contur la gândirea geografică”
-```
+    GEO-MAP Moldova ·
+    „De la harta-contur la gândirea geografică”
 
 </footer>
 
+
 <script>
+
+
+/* =========================
+   VARIABLES
+========================= */
 
 let selectedX = null;
 let selectedY = null;
 let hints = 0;
+let currentLanguage = "ro";
 
 
-/* MAP CLICK */
+/* =========================
+   SELECT MAP POINT
+========================= */
 
-function mapClick(event) {
+function selectMapPoint(event) {
 
-    const svg = document.getElementById("interactiveMap");
+    const map = document.getElementById("physicalMap");
+    const layer = event.currentTarget;
+    const marker = document.getElementById("studentMarker");
 
-    const point = svg.createSVGPoint();
+    const rect = layer.getBoundingClientRect();
 
-    point.x = event.clientX;
-    point.y = event.clientY;
+    selectedX =
+        event.clientX - rect.left;
 
-    const screenPoint =
-        point.matrixTransform(
-            svg.getScreenCTM().inverse()
-        );
+    selectedY =
+        event.clientY - rect.top;
 
-    selectedX = screenPoint.x;
-    selectedY = screenPoint.y;
 
-    let oldMarker =
-        document.getElementById("studentMarker");
+    const percentX =
+        (selectedX / rect.width) * 100;
 
-    if (oldMarker) {
-        oldMarker.remove();
-    }
+    const percentY =
+        (selectedY / rect.height) * 100;
 
-    const marker =
-        document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "circle"
-        );
 
-    marker.setAttribute("id", "studentMarker");
-    marker.setAttribute("cx", selectedX);
-    marker.setAttribute("cy", selectedY);
-    marker.setAttribute("r", "9");
-    marker.setAttribute("fill", "#C75C5C");
-    marker.setAttribute("stroke", "white");
-    marker.setAttribute("stroke-width", "3");
+    marker.style.left =
+        percentX + "%";
 
-    svg.appendChild(marker);
+    marker.style.top =
+        percentY + "%";
+
+    marker.style.display =
+        "block";
+
 
     document.getElementById("result").innerHTML =
-        "📍 Ai plasat un punct. Acum apasă VERIFICĂ.";
+        currentLanguage === "ro"
+        ?
+        "📍 Ai plasat un punct. Acum apasă <strong>VERIFICĂ</strong>."
+        :
+        "📍 You placed a point. Now click <strong>CHECK</strong>.";
 }
 
 
-/* CHECK ANSWER */
+/* =========================
+   CHECK NORTH POINT
+========================= */
 
-function checkAnswer() {
+function checkNorthPoint() {
 
     if (selectedX === null) {
 
         document.getElementById("result").innerHTML =
-            "📍 Mai întâi fă clic pe hartă.";
+            currentLanguage === "ro"
+            ?
+            "📍 Mai întâi fă clic pe hartă."
+            :
+            "📍 First click on the map.";
 
         return;
     }
 
+
     /*
-       Zona centrală este folosită aici
-       doar pentru prototip.
+       Pentru această primă versiune,
+       zona corectă este aproximată în
+       partea de nord a hărții.
     */
 
-    const targetX = 250;
-    const targetY = 300;
+    const map = document.getElementById("physicalMap");
+    const rect = map.getBoundingClientRect();
 
-    const distance =
-        Math.sqrt(
-            Math.pow(selectedX - targetX, 2) +
-            Math.pow(selectedY - targetY, 2)
-        );
+    const clickPercentY =
+        selectedY / rect.height * 100;
 
-    if (distance < 75) {
+    const clickPercentX =
+        selectedX / rect.width * 100;
+
+
+    /*
+       Punctul extrem de nord este
+       în partea de nord a teritoriului.
+    */
+
+    const correct =
+        clickPercentY < 22 &&
+        clickPercentX > 30 &&
+        clickPercentX < 75;
+
+
+    if (correct) {
 
         document.getElementById("result").innerHTML =
-            "🎉 <strong>Foarte bine!</strong> Ai localizat corect zona Codrilor. +10 puncte.";
+            currentLanguage === "ro"
+            ?
+            "🎉 <strong>Foarte bine!</strong> Ai localizat corect zona punctului extrem de nord al Republicii Moldova. +10 puncte."
+            :
+            "🎉 <strong>Excellent!</strong> You correctly located the northernmost point of the Republic of Moldova. +10 points.";
 
-    } else if (distance < 130) {
+    }
+
+    else if (clickPercentY < 35) {
 
         document.getElementById("result").innerHTML =
-            "🔎 <strong>Ești aproape!</strong> Analizează zona centrală a Republicii Moldova.";
+            currentLanguage === "ro"
+            ?
+            "🔎 <strong>Ești aproape!</strong> Privește mai atent partea cea mai nordică a teritoriului."
+            :
+            "🔎 <strong>You are close!</strong> Look more carefully at the northernmost part of the territory.";
 
-    } else {
+    }
+
+    else {
 
         document.getElementById("result").innerHTML =
-            "💡 <strong>Mai încearcă!</strong> Privește partea centrală a țării.";
-
+            currentLanguage === "ro"
+            ?
+            "💡 <strong>Mai încearcă!</strong> Punctul extrem de nord se află în partea cea mai nordică a Republicii Moldova."
+            :
+            "💡 <strong>Try again!</strong> The northernmost point is located in the northernmost part of the Republic of Moldova.";
     }
 
 }
 
 
-/* HINT */
+/* =========================
+   HINT
+========================= */
 
-function showHint() {
+function showNorthHint() {
 
     hints++;
+
 
     if (hints === 1) {
 
         document.getElementById("result").innerHTML =
-            "💡 Indiciul 1: Privește partea centrală a Republicii Moldova.";
+            currentLanguage === "ro"
+            ?
+            "💡 Indiciul 1: Privește partea de nord a Republicii Moldova."
+            :
+            "💡 Hint 1: Look at the northern part of the Republic of Moldova.";
 
-    } else if (hints === 2) {
+    }
+
+    else if (hints === 2) {
 
         document.getElementById("result").innerHTML =
-            "💡 Indiciul 2: Codrii se află în zona centrală, în apropierea municipiului Chișinău.";
+            currentLanguage === "ro"
+            ?
+            "💡 Indiciul 2: Punctul extrem de nord se află în apropierea frontierei cu Ucraina."
+            :
+            "💡 Hint 2: The northernmost point is near the border with Ukraine.";
 
-    } else {
+    }
+
+    else {
 
         document.getElementById("result").innerHTML =
-            "💡 Indiciul 3: Caută regiunea situată în centrul țării.";
-
+            currentLanguage === "ro"
+            ?
+            "💡 Indiciul 3: Caută cel mai nordic punct al teritoriului Republicii Moldova."
+            :
+            "💡 Hint 3: Look for the northernmost point of the territory of the Republic of Moldova.";
     }
 
 }
 
 
-/* SCROLL */
+/* =========================
+   RESET
+========================= */
+
+function resetNorthPoint() {
+
+    selectedX = null;
+    selectedY = null;
+    hints = 0;
+
+
+    document.getElementById("studentMarker").style.display =
+        "none";
+
+
+    document.getElementById("result").innerHTML =
+        currentLanguage === "ro"
+        ?
+        "📍 Fă clic pe hartă pentru a selecta răspunsul."
+        :
+        "📍 Click on the map to select your answer.";
+}
+
+
+/* =========================
+   SCROLL
+========================= */
 
 function scrollToActivity() {
 
@@ -716,39 +1003,221 @@ function scrollToActivity() {
 }
 
 
-/* LANGUAGE */
+/* =========================
+   LANGUAGE
+========================= */
 
 function changeLanguage() {
 
-    const subtitle =
-        document.getElementById("subtitle");
+    if (currentLanguage === "ro") {
 
-    const description =
-        document.getElementById("description");
-
-    if (document.documentElement.lang === "ro") {
+        currentLanguage = "en";
 
         document.documentElement.lang = "en";
 
-        subtitle.innerText =
+
+        document.getElementById("subtitle").innerText =
             "The map that teaches you to think geographically.";
 
-        description.innerText =
-            "Explore, build, check and interpret the maps of the Republic of Moldova.";
+        document.getElementById("description").innerText =
+            "Explore, build, check and interpret maps of the Republic of Moldova.";
 
-    } else {
+        document.getElementById("startButton").innerText =
+            "START EXPLORING";
 
-        document.documentElement.lang = "ro";
+        document.getElementById("navMaps").innerText =
+            "Maps";
 
-        subtitle.innerText =
-            "Harta care te învață să gândești geografic.";
+        document.getElementById("navMissions").innerText =
+            "Missions";
 
-        description.innerText =
-            "Explorează, construiește, verifică și interpretează hărțile Republicii Moldova.";
+        document.getElementById("navExplore").innerText =
+            "Explore";
+
+        document.getElementById("navProgress").innerText =
+            "My progress";
+
+        document.getElementById("mapTitle").innerText =
+            "🇲🇩 Republic of Moldova";
+
+        document.getElementById("mapDescription").innerText =
+            "Discover the geographical space of the Republic of Moldova.";
+
+        document.getElementById("discoverTitle").innerText =
+            "Discover GEO-MAP";
+
+        document.getElementById("card1Title").innerText =
+            "Interactive maps";
+
+        document.getElementById("card1Text").innerText =
+            "Complete and explore geographical maps.";
+
+        document.getElementById("card2Title").innerText =
+            "Geographical missions";
+
+        document.getElementById("card2Text").innerText =
+            "Solve challenges and discover Moldova.";
+
+        document.getElementById("card3Title").innerText =
+            "Learn to learn";
+
+        document.getElementById("card3Text").innerText =
+            "Analyse, check and reflect on your own learning process.";
+
+        document.getElementById("card4Title").innerText =
+            "Your progress";
+
+        document.getElementById("card4Text").innerText =
+            "Track your results and competency development.";
+
+        document.getElementById("missionTitle").innerText =
+            "🎯 Mission 1 — Extreme points";
+
+        document.getElementById("instructionTitle").innerText =
+            "Locate the northernmost point of the Republic of Moldova.";
+
+        document.getElementById("instructionText").innerText =
+            "Analyse the physical map and click where you think the northernmost point is located.";
+
+        document.getElementById("checkButton").innerText =
+            "✓ CHECK";
+
+        document.getElementById("hintButton").innerText =
+            "💡 I NEED A HINT";
+
+        document.getElementById("resetButton").innerText =
+            "🔄 TRY AGAIN";
+
+        document.getElementById("reflectionTitle").innerText =
+            "🧠 Reflect";
+
+        document.getElementById("reflectionQuestion").innerText =
+            "What helped you locate the answer?";
+
+        document.getElementById("reflection1").innerText =
+            "I knew the answer.";
+
+        document.getElementById("reflection2").innerText =
+            "I analysed the map.";
+
+        document.getElementById("reflection3").innerText =
+            "I used a hint.";
+
+        document.getElementById("reflection4").innerText =
+            "I tried again.";
+
+        document.getElementById("reflectionText").placeholder =
+            "Write your own reflection...";
 
     }
 
+    else {
+
+        currentLanguage = "ro";
+
+        document.documentElement.lang = "ro";
+
+
+        document.getElementById("subtitle").innerText =
+            "Harta care te învață să gândești geografic.";
+
+        document.getElementById("description").innerText =
+            "Explorează, construiește, verifică și interpretează hărțile Republicii Moldova.";
+
+        document.getElementById("startButton").innerText =
+            "ÎNCEPE EXPLORAREA";
+
+        document.getElementById("navMaps").innerText =
+            "Hărți";
+
+        document.getElementById("navMissions").innerText =
+            "Misiuni";
+
+        document.getElementById("navExplore").innerText =
+            "Explorează";
+
+        document.getElementById("navProgress").innerText =
+            "Progresul meu";
+
+        document.getElementById("mapTitle").innerText =
+            "🇲🇩 Republica Moldova";
+
+        document.getElementById("mapDescription").innerText =
+            "Descoperă spațiul geografic al Republicii Moldova.";
+
+        document.getElementById("discoverTitle").innerText =
+            "Descoperă GEO-MAP";
+
+        document.getElementById("card1Title").innerText =
+            "Hărți interactive";
+
+        document.getElementById("card1Text").innerText =
+            "Completează și explorează hărți geografice.";
+
+        document.getElementById("card2Title").innerText =
+            "Misiuni geografice";
+
+        document.getElementById("card2Text").innerText =
+            "Rezolvă provocări și descoperă Moldova.";
+
+        document.getElementById("card3Title").innerText =
+            "Învață să înveți";
+
+        document.getElementById("card3Text").innerText =
+            "Analizează, verifică și reflectează asupra propriului proces de învățare.";
+
+        document.getElementById("card4Title").innerText =
+            "Progresul tău";
+
+        document.getElementById("card4Text").innerText =
+            "Urmărește rezultatele și dezvoltarea competențelor.";
+
+        document.getElementById("missionTitle").innerText =
+            "🎯 Misiunea 1 — Punctele extreme";
+
+        document.getElementById("instructionTitle").innerText =
+            "Localizează punctul extrem de nord al Republicii Moldova.";
+
+        document.getElementById("instructionText").innerText =
+            "Analizează harta fizică și fă clic în locul în care crezi că se află punctul extrem de nord.";
+
+        document.getElementById("checkButton").innerText =
+            "✓ VERIFICĂ";
+
+        document.getElementById("hintButton").innerText =
+            "💡 AM NEVOIE DE UN INDICIU";
+
+        document.getElementById("resetButton").innerText =
+            "🔄 ÎNCEARCĂ DIN NOU";
+
+        document.getElementById("reflectionTitle").innerText =
+            "🧠 Reflectează";
+
+        document.getElementById("reflectionQuestion").innerText =
+            "Ce te-a ajutat să localizezi răspunsul?";
+
+        document.getElementById("reflection1").innerText =
+            "Am știut răspunsul.";
+
+        document.getElementById("reflection2").innerText =
+            "Am analizat harta.";
+
+        document.getElementById("reflection3").innerText =
+            "Am folosit un indiciu.";
+
+        document.getElementById("reflection4").innerText =
+            "Am încercat din nou.";
+
+        document.getElementById("reflectionText").placeholder =
+            "Scrie propria reflecție...";
+    }
+
 }
+
+
+/* =========================
+   END
+========================= */
 
 </script>
 

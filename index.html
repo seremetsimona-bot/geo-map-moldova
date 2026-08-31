@@ -19,6 +19,7 @@
     --border: #DCE5E1;
     --success: #287A45;
     --error: #B84C4C;
+    --warning: #8A6815;
 }
 
 * {
@@ -159,7 +160,7 @@ nav a:hover {
 
 .real-map {
     width: 100%;
-    max-width: 350px;
+    max-width: 380px;
     height: auto;
     display: block;
     margin: 20px auto;
@@ -213,7 +214,7 @@ nav a:hover {
 
 
 /* =====================================================
-   ACTIVITY
+   ACTIVITIES
 ===================================================== */
 
 .activity {
@@ -312,17 +313,17 @@ nav a:hover {
 
 
 /* =====================================================
-   MARKERUL ELEVULUI
+   STUDENT MARKER
 ===================================================== */
 
 .student-marker {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: #D64545;
     border: 4px solid white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.45);
     transform: translate(-50%, -50%);
     pointer-events: none;
     display: none;
@@ -343,17 +344,19 @@ nav a:hover {
 
 
 /* =====================================================
-   TARGET INVIZIBIL - FOLOSIT DOAR PENTRU CALCUL
+   TARGET AREA
 ===================================================== */
 
-.target-marker {
+.correct-marker {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
+    border: 4px solid #2E8B57;
+    background: rgba(46,139,87,0.18);
     transform: translate(-50%, -50%);
     pointer-events: none;
-    display: none;
+    z-index: 8;
 }
 
 
@@ -369,6 +372,7 @@ nav a:hover {
     margin-top: 15px;
     border-radius: 12px;
     background: #F7F9F8;
+    line-height: 1.5;
 }
 
 .success {
@@ -382,7 +386,7 @@ nav a:hover {
 }
 
 .warning {
-    color: #8A6815;
+    color: var(--warning);
     background: #FFF7DA;
 }
 
@@ -617,7 +621,6 @@ footer {
         width: 30px;
         height: 30px;
     }
-
 }
 
 </style>
@@ -627,10 +630,6 @@ footer {
 
 <body>
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
 
 <header>
 
@@ -685,14 +684,19 @@ footer {
 <h3>🇲🇩 Harta fizică a Republicii Moldova</h3>
 
 <img
-    src="MoldRelief.jpg"
+    src="https://upload.wikimedia.org/wikipedia/commons/9/95/MoldRelief.jpg"
     alt="Harta fizică a Republicii Moldova"
     class="real-map"
 >
 
 <p>
-    Analizează relieful și poziția geografică a Republicii Moldova.
+    Analizează relieful și poziția geografică
+    a Republicii Moldova.
 </p>
+
+<small>
+    Sursa: Wikimedia Commons – MoldRelief.jpg
+</small>
 
 </div>
 
@@ -787,11 +791,12 @@ Calculează întinderea de la nord la sud
 <p id="extremeInstruction">
 
 Atinge harta în locul în care crezi că
-se află punctul indicat.
+se află <strong>Naslavcea</strong>.
 
 <br><br>
 
 🔴 <strong>Punctul roșu</strong> arată locul selectat de tine.
+Poți atinge din nou harta pentru a-l repoziționa.
 
 </p>
 
@@ -837,8 +842,7 @@ Harta fizică a Republicii Moldova
 >
 
 <img
-    id="mapImage"
-    src="MoldRelief.jpg"
+    src="https://upload.wikimedia.org/wikipedia/commons/9/95/MoldRelief.jpg"
     alt="Harta fizică a Republicii Moldova"
 >
 
@@ -935,28 +939,28 @@ Selectează cele două răspunsuri corecte.
 <div class="option-grid">
 
 <div
-    class="option neighbour-option"
+    class="option"
     onclick="toggleNeighbour(this,'romania')"
 >
 🇷🇴 România
 </div>
 
 <div
-    class="option neighbour-option"
+    class="option"
     onclick="toggleNeighbour(this,'ukraine')"
 >
 🇺🇦 Ucraina
 </div>
 
 <div
-    class="option neighbour-option"
+    class="option"
     onclick="toggleNeighbour(this,'hungary')"
 >
 🇭🇺 Ungaria
 </div>
 
 <div
-    class="option neighbour-option"
+    class="option"
     onclick="toggleNeighbour(this,'bulgaria')"
 >
 🇧🇬 Bulgaria
@@ -1022,28 +1026,28 @@ Alege afirmația corectă.
 <div class="option-grid">
 
 <div
-    class="option europe-option"
+    class="option"
     onclick="selectEurope(this,'central')"
 >
 A. În Europa Centrală și de Est
 </div>
 
 <div
-    class="option europe-option"
+    class="option"
     onclick="selectEurope(this,'north')"
 >
 B. În Europa de Nord
 </div>
 
 <div
-    class="option europe-option"
+    class="option"
     onclick="selectEurope(this,'west')"
 >
 C. În Europa de Vest
 </div>
 
 <div
-    class="option europe-option"
+    class="option"
     onclick="selectEurope(this,'south')"
 >
 D. În Europa de Sud
@@ -1335,204 +1339,109 @@ GEO-MAP Moldova ·
 
 
 /* =====================================================
-   COORDONATELE PUNCTELOR EXTREME
+   HARTA
+   MoldRelief.jpg – Wikimedia Commons
 
-   Valorile sunt cele folosite în manual.
+   Fișier original:
+   1727 × 2138 px
 
-   IMPORTANT:
-   Nu mai introducem x/y pentru fiecare punct.
+   Sursa:
+   Wikimedia Commons
+===================================================== */
 
-   Browserul calculează poziția pe hartă pornind
-   de la LATITUDINE + LONGITUDINE.
+const MAP_IMAGE =
+    "https://upload.wikimedia.org/wikipedia/commons/9/95/MoldRelief.jpg";
+
+
+/* =====================================================
+   PUNCTELE EXTREME
+
+   Coordonate geografice:
+   Naslavcea       48°28′ N, 27°35′ E
+   Giurgiulești    45°29′ N, 28°12′ E
+   Palanca         46°24′ N, 30°05′ E
+   Criva           48°16′ N, 26°40′ E
+
+   x / y = poziție procentuală pe MoldRelief.jpg
+
+   Toleranță:
+   8%  = corect
+   14% = foarte aproape
 ===================================================== */
 
 const extremePoints = [
 
-    {
-        name: "Naslavcea",
-        direction: "nord",
+{
+    name: "Naslavcea",
+    direction: "nord",
+    latitude: "48°28′ N",
+    longitude: "27°35′ E",
 
-        latitude: 48 + 28 / 60,
-        longitude: 27 + 35 / 60,
+    /* partea nordică a hărții */
+    x: 54,
+    y: 5,
 
-        latitudeText: "48°28′ N",
-        longitudeText: "27°35′ E"
-    },
+    tolerance: 8,
+    closeTolerance: 14
+},
 
-    {
-        name: "Giurgiulești",
-        direction: "sud",
+{
+    name: "Giurgiulești",
+    direction: "sud",
+    latitude: "45°29′ N",
+    longitude: "28°12′ E",
 
-        latitude: 45 + 29 / 60,
-        longitude: 28 + 12 / 60,
+    /* stânga-jos, spre România */
+    x: 45,
+    y: 97,
 
-        latitudeText: "45°29′ N",
-        longitudeText: "28°12′ E"
-    },
+    tolerance: 8,
+    closeTolerance: 14
+},
 
-    {
-        name: "Palanca",
-        direction: "est",
+{
+    name: "Palanca",
+    direction: "est",
+    latitude: "46°24′ N",
+    longitude: "30°05′ E",
 
-        latitude: 46 + 24 / 60,
-        longitude: 30 + 5 / 60,
+    /* partea dreaptă-jos a teritoriului */
+    x: 93,
+    y: 63,
 
-        latitudeText: "46°24′ N",
-        longitudeText: "30°05′ E"
-    },
+    tolerance: 8,
+    closeTolerance: 14
+},
 
-    {
-        name: "Criva",
-        direction: "vest",
+{
+    name: "Criva",
+    direction: "vest",
+    latitude: "48°16′ N",
+    longitude: "26°40′ E",
 
-        latitude: 48 + 16 / 60,
-        longitude: 26 + 40 / 60,
+    /* partea stângă-sus */
+    x: 5,
+    y: 8,
 
-        latitudeText: "48°16′ N",
-        longitudeText: "26°40′ E"
-    }
+    tolerance: 8,
+    closeTolerance: 14
+}
 
 ];
 
 
-/* =====================================================
-   EXTINDEREA GEOGRAFICĂ A HĂRȚII
-
-   Harta MoldRelief.jpg are 1727 × 2138 px.
-
-   Pentru poziționare folosim limitele geografice
-   ale cadrului hărții.
-
-   Aceste limite permit transformarea coordonatelor
-   geografice în poziții procentuale pe imagine.
-===================================================== */
-
-const MAP_BOUNDS = {
-
-    west: 26.60,
-    east: 30.15,
-
-    north: 48.55,
-    south: 45.40
-
-};
-
-
-/* =====================================================
-   TOLERANȚA
-
-   Toleranța este exprimată în grade geografice.
-
-   0.08° ≈ 5–9 km, în funcție de direcție.
-
-   Pentru utilizarea pe telefon folosim o zonă
-   de răspuns generoasă.
-
-   Zona "foarte aproape" este mai mare decât zona
-   de răspuns corect.
-===================================================== */
-
-const CORRECT_TOLERANCE = 0.10;
-
-const NEAR_TOLERANCE = 0.22;
-
-
-/* =====================================================
-   VARIABILE
-===================================================== */
-
 let currentExtreme = 0;
-
-let selectedLatitude = null;
-let selectedLongitude = null;
+let selectedX = null;
+let selectedY = null;
 
 let extremeScore = 0;
-
 let extremeHints = 0;
 
-
-/* =====================================================
-   CONVERSIA COORDONATE → POZIȚIE PE IMAGINE
-
-   Longitude → X
-
-   Latitude → Y
-
-   Latitudinea crește spre nord, deci pe imagine
-   valoarea Y trebuie inversată.
-===================================================== */
-
-function geographicToMapPosition(latitude, longitude) {
-
-    const x =
-
-        (
-            (longitude - MAP_BOUNDS.west) /
-            (MAP_BOUNDS.east - MAP_BOUNDS.west)
-        ) * 100;
-
-
-    const y =
-
-        (
-            (MAP_BOUNDS.north - latitude) /
-            (MAP_BOUNDS.north - MAP_BOUNDS.south)
-        ) * 100;
-
-
-    return {
-        x: x,
-        y: y
-    };
-
-}
+let checkingExtreme = false;
 
 
 /* =====================================================
-   CALCUL DISTANȚĂ GEOGRAFICĂ SIMPLIFICATĂ
-
-   Folosim diferența în latitudine și longitudine.
-
-   Pentru un exercițiu pe hartă este suficientă
-   această metodă, iar toleranța este intenționat
-   generoasă pentru dispozitive mobile.
-===================================================== */
-
-function geographicDistance(
-    latitude1,
-    longitude1,
-    latitude2,
-    longitude2
-) {
-
-    const latitudeDifference =
-        latitude1 - latitude2;
-
-    const longitudeDifference =
-        longitude1 - longitude2;
-
-
-    return Math.sqrt(
-
-        Math.pow(
-            latitudeDifference,
-            2
-        )
-
-        +
-
-        Math.pow(
-            longitudeDifference,
-            2
-        )
-
-    );
-
-}
-
-
-/* =====================================================
-   ACTUALIZAREA MISIUNII
+   ACTUALIZARE MISIUNE
 ===================================================== */
 
 function updateExtremeMission() {
@@ -1542,34 +1451,25 @@ function updateExtremeMission() {
 
 
     document.getElementById("pointProgress").innerText =
-
         "Punctul " +
         (currentExtreme + 1) +
         " din 4";
 
 
     document.getElementById("scoreText").innerText =
-
         "⭐ Scor: " +
         extremeScore +
         " / 40";
 
 
     document.getElementById("progressFill").style.width =
-
-        (
-            currentExtreme / 4 * 100
-        ) +
-
+        ((currentExtreme) / 4 * 100) +
         "%";
 
 
     document.getElementById("extremeQuestion").innerText =
-
         "Localizează punctul extrem de " +
-
         point.direction +
-
         " al Republicii Moldova.";
 
 
@@ -1583,7 +1483,9 @@ function updateExtremeMission() {
 
         "<br><br>" +
 
-        "🔴 <strong>Punctul roșu</strong> arată locul selectat de tine.";
+        "🔴 <strong>Punctul roșu</strong> arată locul selectat de tine. " +
+
+        "Poți atinge din nou harta pentru a-l repoziționa.";
 
 
     const result =
@@ -1598,8 +1500,12 @@ function updateExtremeMission() {
         "📍 Atinge harta pentru a selecta răspunsul.";
 
 
-    selectedLatitude = null;
-    selectedLongitude = null;
+    selectedX = null;
+    selectedY = null;
+
+    checkingExtreme = false;
+
+    extremeHints = 0;
 
 
     const marker =
@@ -1608,24 +1514,24 @@ function updateExtremeMission() {
 
     marker.style.display =
         "none";
-
-
-    extremeHints = 0;
-
 }
 
 
 /* =====================================================
    SELECTAREA PE HARTĂ
 
-   Elevul poate atinge ORIUNDE.
-
-   La fiecare nouă atingere markerul se mută.
-
-   Nu există blocare după prima selecție.
+   Folosim clientX/clientY pentru:
+   - mouse
+   - telefon
+   - tabletă
 ===================================================== */
 
 function selectExtremePoint(event) {
+
+    if (checkingExtreme) {
+        return;
+    }
+
 
     const map =
         document.getElementById("extremeMap");
@@ -1635,78 +1541,51 @@ function selectExtremePoint(event) {
         map.getBoundingClientRect();
 
 
-    const xPercent =
-
-        (
-            (event.clientX - rect.left) /
-            rect.width
-        ) * 100;
+    selectedX =
+        ((event.clientX - rect.left) / rect.width) * 100;
 
 
-    const yPercent =
-
-        (
-            (event.clientY - rect.top) /
-            rect.height
-        ) * 100;
+    selectedY =
+        ((event.clientY - rect.top) / rect.height) * 100;
 
 
-    /*
-       Transformăm poziția de pe imagine
-       în coordonate geografice.
-    */
+    /* limităm valorile în interiorul hărții */
 
-    selectedLongitude =
-
-        MAP_BOUNDS.west +
-
-        (
-            xPercent / 100
-        ) *
-
-        (
-            MAP_BOUNDS.east -
-            MAP_BOUNDS.west
+    selectedX =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                selectedX
+            )
         );
 
 
-    selectedLatitude =
-
-        MAP_BOUNDS.north -
-
-        (
-            yPercent / 100
-        ) *
-
-        (
-            MAP_BOUNDS.north -
-            MAP_BOUNDS.south
+    selectedY =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                selectedY
+            )
         );
 
-
-    /*
-       Afișăm markerul.
-    */
 
     const marker =
         document.getElementById("studentMarker");
 
 
     marker.style.left =
-        xPercent + "%";
+        selectedX + "%";
 
 
     marker.style.top =
-        yPercent + "%";
+        selectedY + "%";
 
 
     marker.style.display =
         "block";
 
-
-    /*
-       Feedback simplu.
-    */
 
     const result =
         document.getElementById("extremeResult");
@@ -1717,26 +1596,47 @@ function selectExtremePoint(event) {
 
 
     result.innerHTML =
+        "🔴 <strong>Ai selectat poziția.</strong><br>" +
+        "Apasă <strong>VERIFICĂ</strong> pentru a vedea rezultatul.";
 
-        "🔴 <strong>Punct selectat.</strong><br>" +
 
-        "Apasă „VERIFICĂ” pentru a verifica poziția.";
-
+    extremeHints = 0;
 }
 
 
 /* =====================================================
-   VERIFICAREA PUNCTULUI
+   CALCUL DISTANȚĂ
+===================================================== */
+
+function calculateDistance(x1, y1, x2, y2) {
+
+    return Math.sqrt(
+
+        Math.pow(
+            x1 - x2,
+            2
+        )
+
+        +
+
+        Math.pow(
+            y1 - y2,
+            2
+        )
+
+    );
+}
+
+
+/* =====================================================
+   VERIFICARE PUNCT EXTREM
 ===================================================== */
 
 function checkExtremePoint() {
 
     if (
-
-        selectedLatitude === null ||
-
-        selectedLongitude === null
-
+        selectedX === null ||
+        selectedY === null
     ) {
 
         const result =
@@ -1748,12 +1648,10 @@ function checkExtremePoint() {
 
 
         result.innerHTML =
-
-            "📍 Mai întâi atinge harta pentru a selecta un punct.";
+            "📍 Mai întâi atinge harta pentru a selecta poziția.";
 
 
         return;
-
     }
 
 
@@ -1761,20 +1659,14 @@ function checkExtremePoint() {
         extremePoints[currentExtreme];
 
 
-    /*
-       Calculăm distanța dintre poziția aleasă
-       și coordonatele reale ale punctului.
-    */
-
     const distance =
+        calculateDistance(
 
-        geographicDistance(
+            selectedX,
+            selectedY,
 
-            selectedLatitude,
-            selectedLongitude,
-
-            target.latitude,
-            target.longitude
+            target.x,
+            target.y
 
         );
 
@@ -1788,8 +1680,10 @@ function checkExtremePoint() {
     ================================================= */
 
     if (
-        distance <= CORRECT_TOLERANCE
+        distance <= target.tolerance
     ) {
+
+        checkingExtreme = true;
 
         extremeScore += 10;
 
@@ -1800,9 +1694,9 @@ function checkExtremePoint() {
 
         result.innerHTML =
 
-            "🎉 <strong>Corect!</strong><br>" +
+            "🎉 <strong>Excelent!</strong><br>" +
 
-            "Ai localizat punctul extrem de " +
+            "Ai localizat corect punctul extrem de " +
 
             target.direction +
 
@@ -1816,19 +1710,18 @@ function checkExtremePoint() {
 
             "📍 " +
 
-            target.latitudeText +
+            target.latitude +
 
             ", " +
 
-            target.longitudeText +
+            target.longitude +
 
             "<br><br>" +
 
-            "⭐ +10 puncte";
+            "⭐ <strong>+10 puncte</strong>";
 
 
         document.getElementById("scoreText").innerText =
-
             "⭐ Scor: " +
             extremeScore +
             " / 40";
@@ -1841,7 +1734,6 @@ function checkExtremePoint() {
 
 
         return;
-
     }
 
 
@@ -1850,7 +1742,7 @@ function checkExtremePoint() {
     ================================================= */
 
     if (
-        distance <= NEAR_TOLERANCE
+        distance <= target.closeTolerance
     ) {
 
         result.className =
@@ -1864,7 +1756,6 @@ function checkExtremePoint() {
             "Verifică puțin poziția și încearcă din nou.";
 
         return;
-
     }
 
 
@@ -1880,9 +1771,7 @@ function checkExtremePoint() {
 
         "🔎 <strong>Mai încearcă!</strong><br>" +
 
-        "Privește cu atenție harta și selectează " +
-
-        "din nou poziția.";
+        "Privește cu atenție harta și selectează din nou poziția.";
 
 }
 
@@ -1908,6 +1797,10 @@ function nextExtremePoint() {
             "Misiune finalizată";
 
 
+        document.getElementById("scoreText").innerText =
+            "⭐ Scor: 40 / 40";
+
+
         document.getElementById("extremeFinal").style.display =
             "block";
 
@@ -1923,27 +1816,28 @@ function nextExtremePoint() {
             "Ai identificat toate cele patru puncte extreme.";
 
 
-        return;
+        checkingExtreme = false;
 
+
+        return;
     }
 
 
     updateExtremeMission();
-
 }
 
 
 /* =====================================================
-   INDICII
+   INDICIU
 ===================================================== */
 
 function showExtremeHint() {
 
-    extremeHints++;
-
-
     const point =
         extremePoints[currentExtreme];
+
+
+    extremeHints++;
 
 
     let message = "";
@@ -1969,11 +1863,9 @@ function showExtremeHint() {
 
         message =
 
-            "💡 Indiciu: punctul " +
+            "💡 Indiciu: punctul se află în apropierea " +
 
-            point.name +
-
-            " se află în extremitatea " +
+            "extremității de " +
 
             point.direction +
 
@@ -1985,17 +1877,17 @@ function showExtremeHint() {
 
         message =
 
-            "💡 Răspuns: " +
+            "💡 Răspuns: <strong>" +
 
             point.name +
 
-            " — " +
+            "</strong><br>" +
 
-            point.latitudeText +
+            point.latitude +
 
             ", " +
 
-            point.longitudeText +
+            point.longitude +
 
             ".";
 
@@ -2012,18 +1904,21 @@ function showExtremeHint() {
 
     result.innerHTML =
         message;
-
 }
 
 
 /* =====================================================
-   RESET
+   RESET PUNCT
 ===================================================== */
 
 function resetExtremePoint() {
 
-    selectedLatitude = null;
-    selectedLongitude = null;
+    selectedX = null;
+    selectedY = null;
+
+    checkingExtreme = false;
+
+    extremeHints = 0;
 
 
     const marker =
@@ -2043,12 +1938,7 @@ function resetExtremePoint() {
 
 
     result.innerHTML =
-
         "📍 Atinge harta pentru a selecta răspunsul.";
-
-
-    extremeHints = 0;
-
 }
 
 
@@ -2069,17 +1959,11 @@ function toggleNeighbour(element, value) {
     ) {
 
         selectedNeighbours =
-
             selectedNeighbours.filter(
-
-                item =>
-                    item !== value
-
+                item => item !== value
             );
 
-    }
-
-    else {
+    } else {
 
         selectedNeighbours.push(value);
 
@@ -2091,7 +1975,6 @@ function toggleNeighbour(element, value) {
 function checkNeighbours() {
 
     const correct =
-
         selectedNeighbours.length === 2 &&
 
         selectedNeighbours.includes("romania") &&
@@ -2115,11 +1998,9 @@ function checkNeighbours() {
 
             "Republica Moldova se învecinează cu " +
 
-            "România și Ucraina.";
+            "<strong>România și Ucraina</strong>.";
 
-    }
-
-    else {
+    } else {
 
         result.className =
             "map-result error";
@@ -2127,9 +2008,9 @@ function checkNeighbours() {
 
         result.innerHTML =
 
-            "❌ <strong>Mai încearcă!</strong><br>" +
+            "🔎 <strong>Mai încearcă!</strong><br>" +
 
-            "Republica Moldova se învecinează cu " +
+            "Republica Moldova are două țări vecine: " +
 
             "România și Ucraina.";
 
@@ -2150,10 +2031,9 @@ function showNeighbourHint() {
 
     result.innerHTML =
 
-        "💡 Indiciu: România se află la vest, " +
+        "💡 Indiciu: una dintre țări se află la vest, " +
 
-        "iar Ucraina la nord, est și sud.";
-
+        "iar cealaltă la nord, est și sud.";
 }
 
 
@@ -2167,29 +2047,18 @@ let selectedEurope = null;
 function selectEurope(element, value) {
 
     document
-        .querySelectorAll(".europe-option")
+        .querySelectorAll("#pozitie .option")
         .forEach(
-
             option =>
                 option.classList.remove("selected")
-
         );
 
 
     element.classList.add("selected");
 
 
-    selectedEurope = value;
-
-
-    document.getElementById("europeResult").className =
-        "map-result";
-
-
-    document.getElementById("europeResult").innerHTML =
-
-        "🧭 Răspuns selectat. Apasă „VERIFICĂ”.";
-
+    selectedEurope =
+        value;
 }
 
 
@@ -2213,11 +2082,9 @@ function checkEurope() {
 
             "Republica Moldova este situată în " +
 
-            "partea central-estică a Europei.";
+            "<strong>partea central-estică a Europei</strong>.";
 
-    }
-
-    else {
+    } else {
 
         result.className =
             "map-result error";
@@ -2225,11 +2092,11 @@ function checkEurope() {
 
         result.innerHTML =
 
-            "❌ <strong>Mai încearcă!</strong><br>" +
+            "🔎 <strong>Mai încearcă!</strong><br>" +
 
             "Analizează poziția Republicii Moldova " +
 
-            "față de celelalte regiuni ale Europei.";
+            "față de regiunile Europei.";
 
     }
 
@@ -2243,73 +2110,52 @@ function checkEurope() {
 function normalizeAnswer(value) {
 
     return value
-
         .toLowerCase()
-
         .replace(/\s/g, "")
-
         .replace(/'/g, "′")
-
+        .replace(/’/g, "′")
         .replace(/"/g, "")
-
-        .replace(/,/g, ".")
-
-        .trim();
-
+        .replace(/,/g, ".");
 }
 
 
 function checkExtent() {
 
     const northSouth =
-
         normalizeAnswer(
-
-            document
-                .getElementById("northSouth")
-                .value
-
+            document.getElementById("northSouth").value
         );
 
 
     const westEast =
-
         normalizeAnswer(
-
-            document
-                .getElementById("westEast")
-                .value
-
+            document.getElementById("westEast").value
         );
 
 
     const northSouthKm =
-
         Number(
-
-            document
-                .getElementById("northSouthKm")
-                .value
-
+            document.getElementById("northSouthKm").value
         );
 
 
     const correctNS =
-
         northSouth.includes("2°59") ||
 
-        northSouth.includes("2.59");
+        northSouth.includes("2.59") ||
+
+        northSouth.includes("2°59′");
 
 
     const correctWE =
-
         westEast.includes("3°25") ||
 
-        westEast.includes("3.25");
+        westEast.includes("3.25") ||
+
+        westEast.includes("3°25′");
 
 
     const correctKm =
-
         northSouthKm >= 325 &&
 
         northSouthKm <= 340;
@@ -2320,13 +2166,9 @@ function checkExtent() {
 
 
     if (
-
         correctNS &&
-
         correctWE &&
-
         correctKm
-
     ) {
 
         result.className =
@@ -2337,17 +2179,15 @@ function checkExtent() {
 
             "🎉 <strong>Foarte bine!</strong><br><br>" +
 
-            "Nord–Sud: <strong>2°59′</strong> ≈ " +
+            "Nord–Sud: <strong>2°59′</strong> " +
 
-            "<strong>332 km</strong>." +
+            "≈ <strong>332 km</strong>." +
 
             "<br>" +
 
             "Vest–Est: <strong>3°25′</strong>.";
 
-    }
-
-    else {
+    } else {
 
         result.className =
             "map-result error";
@@ -2355,15 +2195,15 @@ function checkExtent() {
 
         result.innerHTML =
 
-            "❌ <strong>Verifică din nou calculele.</strong>" +
+            "🔎 <strong>Verifică din nou calculele.</strong>" +
 
             "<br><br>" +
 
-            "Indiciu: scade coordonata sudică din " +
+            "Nord–Sud = 48°28′ − 45°29′ = 2°59′." +
 
-            "cea nordică și coordonata vestică din " +
+            "<br>" +
 
-            "cea estică.";
+            "Vest–Est = 30°05′ − 26°40′ = 3°25′.";
 
     }
 
@@ -2382,19 +2222,19 @@ function showExtentHint() {
 
     result.innerHTML =
 
-        "💡 <strong>Indiciu:</strong>" +
+        "💡 <strong>Indiciu:</strong><br><br>" +
 
-        "<br>" +
-
-        "48°28′ − 45°29′ = 2°59′." +
+        "48°28′ − 45°29′ = <strong>2°59′</strong>." +
 
         "<br><br>" +
 
-        "Pentru kilometri: 2°59′ = 179′." +
+        "30°05′ − 26°40′ = <strong>3°25′</strong>." +
 
-        "<br>" +
+        "<br><br>" +
 
-        "179 × 1,85 ≈ 331 km.";
+        "Pentru kilometri: 179′ × 1,852 ≈ " +
+
+        "<strong>332 km</strong>.";
 
 }
 
@@ -2406,7 +2246,6 @@ function showExtentHint() {
 function saveReflection() {
 
     const text =
-
         document
             .getElementById("reflectionText")
             .value
@@ -2432,7 +2271,6 @@ function saveReflection() {
             "și/sau dezavantajele poziției geografice.";
 
         return;
-
     }
 
 
@@ -2460,9 +2298,7 @@ function scrollToMission() {
     document
         .getElementById("misiuni")
         .scrollIntoView({
-
             behavior: "smooth"
-
         });
 
 }
@@ -2486,34 +2322,26 @@ function changeLanguage() {
         document.documentElement.lang === "ro"
     ) {
 
-        document.documentElement.lang =
-            "en";
+        document.documentElement.lang = "en";
 
 
         subtitle.innerText =
-
             "The map that teaches you to think geographically.";
 
 
         description.innerText =
-
             "Explore the territory and physical-geographical position of the Republic of Moldova.";
 
-    }
+    } else {
 
-    else {
-
-        document.documentElement.lang =
-            "ro";
+        document.documentElement.lang = "ro";
 
 
         subtitle.innerText =
-
             "Harta care te învață să gândești geografic.";
 
 
         description.innerText =
-
             "Tema 1 — Teritoriul și poziția fizico-geografică a Republicii Moldova.";
 
     }

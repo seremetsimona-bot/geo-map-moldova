@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -1565,7 +1564,17 @@ GEO-MAP Moldova ·
 
 
 <script>
+/* =========================================================
+   CONECTARE SUPABASE — GEO-MAP MOLDOVA
+========================================================= */
 
+const SUPABASE_URL = "https://goemwdxusjobtnprtzlw.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "INSEREAZĂ_AICI_CHEIA_TA_sb_publishable";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 /* =========================================================
    MISIUNEA 1 — COORDONATELE REALE
 ========================================================= */
